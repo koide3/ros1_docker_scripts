@@ -1,0 +1,20 @@
+FROM ros:galactic-ros1-bridge
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+    ros-noetic-nmea-msgs \
+    ros-galactic-nmea-msgs \
+ && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /root/ros2_ws/src
+RUN git clone https://github.com/ros2/ros1_bridge.git
+WORKDIR /root/ros2_ws
+
+RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; . /opt/ros/galactic/setup.bash; colcon build'
+RUN sed -i "13i source \"/root/ros2_ws/install/setup.bash\"" /ros_entrypoint.sh
+
+WORKDIR /
+
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["bash"]
