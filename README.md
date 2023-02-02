@@ -1,6 +1,6 @@
 # ros1_docker_scripts
 
-This package provides a set of shell scripts to do ROS1 operation via docker.
+This package provides a set of shell scripts to do ROS1 operation via docker. The first call of each script may take a minute to download and build docker images.
 
 ## Install
 
